@@ -24,7 +24,7 @@ flowchart TD
     Sources --> ETL
 
     ETL --> Normalize[📦 Normalize + Add Metadata]
-    Normalize --> Chunk[🧠 Text Chunking (LangChain)]
+    Normalize --> Chunk[🧠 Text Chunking LangChain]
     Chunk --> Embed[🧬 NeMo Embeddings]
 
     %% Storage

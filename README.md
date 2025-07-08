@@ -77,3 +77,41 @@ flowchart TD
 
 ---
 
+
+**Hours in 1 month (30 days):**
+30 days × 24 hours = **720 hours**
+
+---
+
+### Cost per OS
+
+✅ **Windows**
+0.0162 USD/hour × 720 hours = **11.664 USD/month**
+
+✅ **Ubuntu Pro**
+0.0134 USD/hour × 720 hours = **9.648 USD/month**
+
+✅ **SUSE**
+0.0116 USD/hour × 720 hours = **8.352 USD/month**
+
+✅ **RHEL**
+0.026 USD/hour × 720 hours = **18.72 USD/month**
+
+✅ **Linux (base)**
+0.0116 USD/hour × 720 hours = **8.352 USD/month**
+
+---
+
+### Clean table summary
+
+| Operating System | Price per Hour (USD) | Monthly Cost (USD) |
+| ---------------- | -------------------- | ------------------ |
+| Windows          | 0.0162               | 11.664             |
+| Ubuntu Pro       | 0.0134               | 9.648              |
+| SUSE             | 0.0116               | 8.352              |
+| RHEL             | 0.026                | 18.72              |
+| Linux (base)     | 0.0116               | 8.352              |
+
+---
+
+

@@ -227,5 +227,78 @@ git config --global init.defaultBranch main
    * Repository-specific, default if no flag is given
 
 ---
+```mermaid
+flowchart TD
+
+%% User entry point
+U[User] -->|Orders Experience| S[Shopify Website]
+
+%% Shopify sends order to Cherrio
+S -->|Checkout + Payment Razorpay| C[Cherrio Backend]
+
+%% Cherrio generates voucher for every order
+C -->|Webhook Generates<br>Unique Voucher Code| V[Unique Voucher Code]
+
+%% Order type decision
+V --> O{Gift or Self Purchase?}
+
+%% Gift Flow
+O -->|Gift Purchase| G1[Gift Form Filled in Shopify]
+G1 --> CG[Cherrio Gift Flow]
+CG -->|Send WhatsApp + Email<br>to Receiver & Vendor| MSG1[Gift Messages Sent]
+CG --> P[Pabbly]
+P -->|Sync Data| GS[Google Sheet]
+
+%% Self Purchase Flow
+O -->|Self Purchase| S1[Self Buyer Flow]
+S1 --> CS[Cherrio Self Flow]
+CS -->|Send WhatsApp + Email<br>to Buyer & Vendor| MSG2[Self Purchase Messages Sent]
+CS --> P
+P -->|Sync Data| GS
+
+%% Vendor usage
+V --> VEN[Vendor Tracks Order<br>with Voucher Code]
+
+%% Global Analytics
+C --> GA[Global Analytics<br>Status Check]
+
+
+```
+
+The order management flow for Unnwrap integrates Shopify, Cherrio, and Pabbly to streamline both gifting and self-purchase scenarios. When a user places an order on the Shopify website and completes payment via Razorpay, the system triggers a webhook to Cherrio. Cherrio generates a unique voucher code for every order, ensuring accurate tracking and vendor referencing.
+
+Depending on the order type, the workflow branches into two paths. For gift purchases, the user fills a gift form, and Cherrio triggers its gift flow—sending WhatsApp and email notifications to the recipient and vendor. For self-purchases, Cherrio’s self flow ensures both the buyer and vendor receive automated updates. In both cases, Pabbly synchronizes the order details with Google Sheets, enabling backend teams to track, analyze, and maintain records efficiently.
+
+Additionally, vendors can use the generated voucher code to track orders, while Cherrio simultaneously integrates with global analytics to monitor communication performance. This architecture ensures seamless automation, timely notifications, and centralized order tracking—keeping buyers, vendors, and backend operations aligned without manual intervention.
+
+```mermaid
+flowchart TD
+
+%% Start
+U[Unnwrap Team] --> GS[Master Google Sheet<br> Vendor Details]
+
+%% Google Sheet entry
+GS -->|Fill Vendor Details + Mark 'Vendor' Column| CSV[Export as CSV]
+
+%% Import to Cherrio
+CSV --> C[Cherrio Backend]
+C --> CT[Cherrio Contact List<br>Vendor Tags Added]
+
+%% Prevent auto-messages
+CT -->|Vendor Tag ensures no auto order messages| M[Message Suppression]
+
+%% Pabbly setup
+U --> P[Pabbly Workflow Setup]
+P --> R[Router Config]
+R -->|Check Product Name Condition| Cond[Conditional Flow Added]
+Cond --> Done[Automation Ready]
+
+```
+The vendor onboarding process starts with the Unnwrap team adding vendor details in the Master Google Sheet and marking them with a “Vendor” tag.
+The sheet is then exported as a CSV and imported into Cherrio, where vendors are tagged to prevent automated WhatsApp/Email messages.
+In Pabbly, a new Router is created with product name–based conditions to manage vendor-specific workflows.
+This setup ensures vendors are onboarded smoothly without triggering customer-facing messages.
+The process centralizes data, prevents miscommunication, and keeps vendor automation organized across tools.
+
 
 Would you like help configuring something specific with Git, like authentication, aliases, or push behavior?
